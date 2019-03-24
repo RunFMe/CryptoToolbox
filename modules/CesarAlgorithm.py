@@ -2,7 +2,8 @@ import sys
 from collections import Counter
 from math import log
 
-from VigenereAlgorithm import VigenereAlgorithm
+from modules.VigenereAlgorithm import VigenereAlgorithm
+from utils import read_input, write_output
 
 
 class CesarAlgorithm(VigenereAlgorithm):
@@ -35,7 +36,7 @@ class CesarAlgorithm(VigenereAlgorithm):
 
     def parse_arguments(self, arguments):
         # read input
-        input_text = self.read_input(arguments.input)
+        input_text = read_input(arguments.input)
 
         # process input
         output_text = ''
@@ -52,7 +53,7 @@ class CesarAlgorithm(VigenereAlgorithm):
             output_text = self.hack(input_text, train_text)
 
         # write to output file
-        self.write_output(output_text, arguments.output)
+        write_output(output_text, arguments.output)
 
     def hack(self, input_text, train_text):
         """

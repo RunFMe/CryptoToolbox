@@ -1,8 +1,8 @@
 import argparse
 
-from CesarAlgorithm import CesarAlgorithm
-from VernamAlgorithm import VernamAlgorithm
-from VigenereAlgorithm import VigenereAlgorithm
+from modules.CesarAlgorithm import CesarAlgorithm
+from modules.VernamAlgorithm import VernamAlgorithm
+from modules.VigenereAlgorithm import VigenereAlgorithm
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

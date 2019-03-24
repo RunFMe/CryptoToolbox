@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class CryptoAlgorithm(ABC):
+class CryptoModule(ABC):
     """
     Parent class for all algorithms.
     To add algorithm create a child class and implement functions

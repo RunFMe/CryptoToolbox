@@ -1,8 +1,9 @@
-import sys
-from CryptoAlgorithm import CryptoAlgorithm
+from CryptoModule import CryptoModule
+
+from utils import read_input, write_output
 
 
-class VigenereAlgorithm(CryptoAlgorithm):
+class VigenereAlgorithm(CryptoModule):
     """
     Implementation of Vigenere Crypto Algorithm. It can encrypt, decrypt texts.
     """
@@ -24,7 +25,7 @@ class VigenereAlgorithm(CryptoAlgorithm):
 
     def parse_arguments(self, arguments):
         # read input
-        input_text = self.read_input(arguments.input)
+        input_text = read_input(arguments.input)
 
         shifts = [ord(key_char) - ord('a') for key_char in
                   arguments.key.lower()]
@@ -36,7 +37,7 @@ class VigenereAlgorithm(CryptoAlgorithm):
             output_text = self.decrypt(input_text, shifts)
 
         # write to output file
-        self.write_output(output_text, arguments.output)
+        write_output(output_text, arguments.output)
 
     def encrypt(self, input_text, shifts):
         """
@@ -45,7 +46,6 @@ class VigenereAlgorithm(CryptoAlgorithm):
         :param shifts:
         :return encrypted_text:
         """
-
         output = []
         for i, char in enumerate(input_text):
             output.append(self.shift_char(char, shifts[i % len(shifts)]))
@@ -77,31 +77,3 @@ class VigenereAlgorithm(CryptoAlgorithm):
         else:
             return char
 
-    def read_input(self, input_name):
-        """
-        Reads input from file input_name or stdin if input_name is None
-        :param input_name:
-        :return input_text:
-        """
-        # read input bytes
-        if input_name is None:
-            input_f = sys.stdin
-        else:
-            input_f = open(input_name, 'r')
-        input_bytes = input_f.read()
-        input_f.close()
-
-        return input_bytes
-
-    def write_output(self, output, output_name):
-        """
-        Writes output to output_name file or stdout if output_name is None
-        :param output:
-        :param output_name:
-        """
-        if output_name is None:
-            output_f = sys.stdout
-        else:
-            output_f = open(output_name, 'w+')
-        output_f.write(output)
-        output_f.close()
