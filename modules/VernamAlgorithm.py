@@ -30,24 +30,22 @@ class VernamAlgorithm(CryptoModule):
         key_bytes= read_input_bytes(arguments.key)
 
         # process input
-        if len(input_bytes) != len(key_bytes):
-            raise ValueError('input and key should have the same length')
         xored_bytes = self.xor_bytes(input_bytes, key_bytes)
 
         write_output_bytes(xored_bytes, arguments.output)
 
-    def xor_bytes(self, first_bytes, second_bytes):
+    def xor_bytes(self, input_bytes, key_bytes):
         """
         Takes two bytes objects, turns them into int and applies xor.
-        :param first_bytes:
-        :param second_bytes:
-        :return xored_bytes:
+        :param input_bytes:
+        :param key_bytes:
+        :return: xored_bytes
         """
-        first_bytes = bytearray(first_bytes)
-        second_bytes = bytearray(second_bytes)
+        input_bytes = bytearray(input_bytes)
+        key_bytes = bytearray(key_bytes)
         output = bytearray()
 
-        for byte1, byte2 in zip(first_bytes, second_bytes):
-            output.append(byte1 ^ byte2)
+        for i in range(len(input_bytes)):
+            output.append(input_bytes[i] ^ key_bytes[i % len(key_bytes)])
 
         return bytes(output)

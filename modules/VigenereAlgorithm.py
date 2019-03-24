@@ -27,6 +27,8 @@ class VigenereAlgorithm(CryptoModule):
         # read input
         input_text = read_input(arguments.input)
 
+        if not all([char.isalpha() for char in arguments.key]):
+            raise ValueError('Key can only contain alphabetical characters')
         shifts = [ord(key_char) - ord('a') for key_char in
                   arguments.key.lower()]
         # process input
