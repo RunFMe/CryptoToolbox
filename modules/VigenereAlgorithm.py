@@ -24,19 +24,24 @@ class VigenereAlgorithm(CryptoModule):
         # read input
         input_text = read_input(arguments.input)
 
-        if not all([char.isalpha() for char in arguments.key]):
-            raise ValueError('Key can only contain alphabetical characters')
-        shifts = [ord(key_char) - ord('a') for key_char in
-                  arguments.key.lower()]
         # process input
-        output_text = ''
-        if arguments.action == 'encrypt':
-            output_text = self.encrypt(input_text, shifts)
-        if arguments.action == 'decrypt':
-            output_text = self.decrypt(input_text, shifts)
+        try:
+            action = getattr(self, arguments.action + '_action')
+        except AttributeError:
+            raise NotImplementedError
+
+        output_text = action(input_text, arguments)
 
         # write to output file
         write_output(output_text, arguments.output)
+
+    def encrypt_action(self, input_text, arguments):
+        shifts = self.get_shifts(arguments.key)
+        return self.encrypt(input_text, shifts)
+
+    def decrypt_action(self, input_text, arguments):
+        shifts = self.get_shifts(arguments.key)
+        return self.decrypt(input_text, shifts)
 
     def encrypt(self, input_text, shifts):
         """
@@ -75,3 +80,11 @@ class VigenereAlgorithm(CryptoModule):
             return chr(new_char_num)
         else:
             return char
+
+    def get_shifts(self, key):
+        if not all([char.isalpha() for char in key]):
+            raise ValueError('Key can only contain alphabetical characters')
+        shifts = [ord(key_char) - ord('a') for key_char in
+                  key.lower()]
+
+        return shifts

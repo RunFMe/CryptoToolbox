@@ -1,7 +1,5 @@
-import sys
-
 from CryptoModule import CryptoModule
-from utils import read_input_bytes, write_output_bytes
+from utils import read_input, write_output
 
 
 class VernamAlgorithm(CryptoModule):
@@ -23,13 +21,13 @@ class VernamAlgorithm(CryptoModule):
                                  'decrypt')
 
     def parse_arguments(self, arguments):
-        input_bytes = read_input_bytes(arguments.input)
-        key_bytes= read_input_bytes(arguments.key)
+        input_bytes = read_input(arguments.input, use_bytes=True)
+        key_bytes= read_input(arguments.key, use_bytes=True)
 
         # process input
         xored_bytes = self.xor_bytes(input_bytes, key_bytes)
 
-        write_output_bytes(xored_bytes, arguments.output)
+        write_output(xored_bytes, arguments.output, use_bytes=True)
 
     def xor_bytes(self, input_bytes, key_bytes):
         """

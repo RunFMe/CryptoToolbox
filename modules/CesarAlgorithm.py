@@ -1,9 +1,7 @@
-import sys
 from collections import Counter
 from math import log
 
 from modules.VigenereAlgorithm import VigenereAlgorithm
-from utils import read_input, write_output
 
 
 class CesarAlgorithm(VigenereAlgorithm):
@@ -31,26 +29,20 @@ class CesarAlgorithm(VigenereAlgorithm):
                                  'statistical analysis, required for hack '
                                  'action')
 
-    def parse_arguments(self, arguments):
-        # read input
-        input_text = read_input(arguments.input)
+    def encrypt_action(self, input_text, arguments):
+        return self.encrypt(input_text, [arguments.shift])
 
-        # process input
-        output_text = ''
-        if arguments.action == 'encrypt':
-            output_text = self.encrypt(input_text, [arguments.shift])
-        if arguments.action == 'decrypt':
-            output_text = self.decrypt(input_text, [arguments.shift])
-        if arguments.action == 'hack':
-            if arguments.train is None:
-                raise ValueError('Train text was not provided. It is required '
-                                 'for hack option.')
-            with open(arguments.train, 'r') as f:
-                train_text = f.read()
-            output_text = self.hack(input_text, train_text)
+    def decrypt_action(self, input_text, arguments):
+        return self.decrypt(input_text, [arguments.shift])
 
-        # write to output file
-        write_output(output_text, arguments.output)
+    def hack_action(self, input_text, arguments):
+        if arguments.train is None:
+            raise ValueError('Train text was not provided. It is required '
+                             'for hack option.')
+        with open(arguments.train, 'r') as f:
+            train_text = f.read()
+
+        return self.hack(input_text, train_text)
 
     def hack(self, input_text, train_text):
         """

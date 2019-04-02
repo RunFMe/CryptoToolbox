@@ -19,7 +19,7 @@ class CryptoModule(ABC):
         :param subparsers:
         :return:
         """
-        cesar_parser = subparsers.add_parser(self.name)
+        cesar_parser = subparsers.add_parser(self.__name__)
         self._register_arguments(cesar_parser)
         cesar_parser.set_defaults(parse_func=self.parse_arguments)
 
