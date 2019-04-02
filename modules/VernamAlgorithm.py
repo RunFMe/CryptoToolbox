@@ -11,9 +11,6 @@ class VernamAlgorithm(CryptoModule):
     same key.
     """
 
-    def __init__(self, name):
-        super().__init__(name)
-
     def _register_arguments(self, parser):
         parser.add_argument('--input', '-i',
                             help='path to input file, stdin used if not '

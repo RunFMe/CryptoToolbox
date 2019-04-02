@@ -9,7 +9,7 @@ class CryptoModule(ABC):
     """
 
     def __init__(self, name):
-        self.name = name
+        self.__name__ = name
         self.supports_visual = False
 
     def register_subparser(self, subparsers):

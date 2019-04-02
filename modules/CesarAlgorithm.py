@@ -13,9 +13,6 @@ class CesarAlgorithm(VigenereAlgorithm):
     text.
     """
 
-    def __init__(self, name):
-        super().__init__(name)
-
     def _register_arguments(self, parser):
         parser.add_argument('action', choices=['encrypt', 'decrypt', 'hack'],
                             help='specifies which action to take')
