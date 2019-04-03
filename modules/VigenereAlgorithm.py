@@ -1,5 +1,3 @@
-import string
-
 from CryptoModule import CryptoModule
 from utils import read_input, write_output, Alphabet, en_letters, ru_letters
 
@@ -8,6 +6,7 @@ class VigenereAlgorithm(CryptoModule):
     """
     Implementation of Vigenere Crypto Algorithm. It can encrypt, decrypt texts.
     """
+
     def __init__(self, name, config_file):
         super().__init__(name, config_file)
         self.alphabet = None

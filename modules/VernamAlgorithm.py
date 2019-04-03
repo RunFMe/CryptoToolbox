@@ -11,7 +11,7 @@ class VernamAlgorithm(CryptoModule):
 
     def parse_arguments(self, arguments):
         input_bytes = read_input(arguments.input, use_bytes=True)
-        key_bytes= read_input(arguments.key, use_bytes=True)
+        key_bytes = read_input(arguments.key, use_bytes=True)
 
         # process input
         xored_bytes = self.xor_bytes(input_bytes, key_bytes)

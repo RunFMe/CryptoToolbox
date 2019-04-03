@@ -1,9 +1,9 @@
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 from utils import ConfigParser
 
 
-class CryptoModule(ABC):
+class CryptoModule(metaclass=ABCMeta):
     """
     Parent class for all algorithms.
     To add algorithm create a child class and implement functions
