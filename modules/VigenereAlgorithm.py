@@ -24,7 +24,9 @@ class VigenereAlgorithm(CryptoModule):
         try:
             action = getattr(self, arguments.action + '_action')
         except AttributeError:
-            raise NotImplementedError
+            raise NotImplementedError("Action {0} is not implemented. You have"
+                                      "to add method {0}_action"
+                                      .format(arguments.action))
 
         output_text = action(input_text, arguments)
 

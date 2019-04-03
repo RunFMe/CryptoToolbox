@@ -18,7 +18,8 @@ class Alphabet(tuple):
 
     def index(self, value, start=None, end=None):
         if start is not None or end is not None:
-            raise NotImplementedError
+            raise NotImplementedError("Alphabet does not support start/end "
+                                      "options")
         return self.indexes[value]
 
 
@@ -40,7 +41,7 @@ class ConfigParser:
         with open(filename, 'r') as f:
             raw_json = json.load(f)
         if not isinstance(raw_json['arguments'], list):
-            raise TypeError
+            raise TypeError("arguments must be list")
 
         self.filename = filename
         self.arguments = raw_json['arguments']
@@ -60,7 +61,7 @@ class ConfigParser:
 
     def append_parents(self, parents):
         if not isinstance(self.arguments, list):
-            raise TypeError
+            raise TypeError("parents must be list")
         for parent in parents:
             config_dir = path.dirname(self.filename)
             parent_config_path = path.join(config_dir, parent)
@@ -88,9 +89,9 @@ class TypeCaster:
 
     def register_type(self, name, func):
         if not isinstance(name, str):
-            raise ValueError
+            raise ValueError("type name must be string")
         if name in self._mapping:
-            raise NameError
+            raise NameError("Such type name is already registered")
         self._mapping[name] = func
 
     def cast(self, name):
