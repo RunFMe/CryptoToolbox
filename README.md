@@ -80,4 +80,8 @@ Create config JSON file in config folder.
 "parents": ["SomeParentConfig.json", "SomeSecondConfig.json"]
 }
 ```
-Names specify full and sortened name of option. Other arguments will be simply passed to add_argument of subparser except for type argument. It's impossible to write python function name in json so we use TypeCaster singleton object. It stores mapping from strings to actual type functions. If you want to add new type you should call TypeCaster().register_argument(your_name, your_func) in module __init__ before calling super().__init__ which will parse the config.
+Names specify full and sortened name of option. Other arguments will be simply passed to add_argument of subparser except for type argument. It's impossible to write python function name in json so we use TypeCaster singleton object. It stores mapping from strings to actual type functions. If you want to add new type you should call 
+```
+TypeCaster().register_argument(your_name, your_func)
+```
+In module \_\_init\_\_ before calling super().\_\_init\_\_ which will parse the config.
