@@ -38,4 +38,3 @@ class CryptoModule(ABC):
         :param arguments:
         :return:
         """
-        pass
