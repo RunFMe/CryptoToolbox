@@ -1,7 +1,7 @@
 import string
 
 from CryptoModule import CryptoModule
-from utils import read_input, write_output
+from utils import read_input, write_output, Alphabet
 
 
 class VigenereAlgorithm(CryptoModule):
@@ -11,7 +11,7 @@ class VigenereAlgorithm(CryptoModule):
 
     def __init__(self, name):
         super().__init__(name)
-        self.alphabet = string.ascii_lowercase
+        self.alphabet = Alphabet(string.ascii_lowercase)
 
     def _register_arguments(self, parser):
         parser.add_argument('action', choices=['encrypt', 'decrypt'],

@@ -1,6 +1,20 @@
 import sys
 
 
+class Alphabet(tuple):
+    def __new__(cls, letters):
+        return super().__new__(cls, letters)
+
+    def __init__(self, letters):
+        super().__init__()
+        self.indexes = {char: i for i, char in enumerate(letters)}
+
+    def index(self, value, start=None, end=None):
+        if start is not None or end is not None:
+            raise NotImplementedError
+        return self.indexes[value]
+
+
 def read_input(input_name, use_bytes=False):
     """
     Reads input from file input_name or stdin if input_name is None
@@ -32,3 +46,4 @@ def write_output(output, output_name, use_bytes=False):
         output_f = open(output_name, 'wb+' if use_bytes else 'w+')
     output_f.write(output)
     output_f.close()
+
