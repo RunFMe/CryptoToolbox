@@ -1,4 +1,5 @@
 import sys
+import string
 
 
 class Alphabet(tuple):
@@ -47,3 +48,6 @@ def write_output(output, output_name, use_bytes=False):
     output_f.write(output)
     output_f.close()
 
+
+en_letters = string.ascii_lowercase
+ru_letters = 'абвгдеёжзийклмнопрстуфхцчшщэюя'

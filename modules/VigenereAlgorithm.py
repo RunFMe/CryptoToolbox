@@ -1,17 +1,16 @@
 import string
 
 from CryptoModule import CryptoModule
-from utils import read_input, write_output, Alphabet
+from utils import read_input, write_output, Alphabet, en_letters, ru_letters
 
 
 class VigenereAlgorithm(CryptoModule):
     """
     Implementation of Vigenere Crypto Algorithm. It can encrypt, decrypt texts.
     """
-
     def __init__(self, name):
         super().__init__(name)
-        self.alphabet = Alphabet(string.ascii_lowercase)
+        self.alphabet = None
 
     def _register_arguments(self, parser):
         parser.add_argument('action', choices=['encrypt', 'decrypt'],
@@ -24,8 +23,15 @@ class VigenereAlgorithm(CryptoModule):
                                  'provided')
         parser.add_argument('--key', '-k', required=True,
                             help='String used as a key for encryption')
+        parser.add_argument('--lang', '-l', choices=['en', 'ru'], default='en',
+                            help='Which language letters to encode')
 
     def parse_arguments(self, arguments):
+        if arguments.lang == 'en':
+            self.alphabet = Alphabet(en_letters)
+        elif arguments.lang == 'ru':
+            self.alphabet = Alphabet(ru_letters)
+
         # read input
         input_text = read_input(arguments.input)
 
@@ -78,12 +84,23 @@ class VigenereAlgorithm(CryptoModule):
         :param offset:
         :return shifted_char:
         """
-        if char in self.alphabet:
-            char_num = self.alphabet.index(char)
-            shifted_char_num = (char_num + offset) % len(self.alphabet)
-            return self.alphabet[shifted_char_num]
+        if char.lower() in self.alphabet:
+            char_index = self.alphabet.index(char.lower())
+            shifted_index = self.shift_index(char_index, offset)
+            shifted_char = self.alphabet[shifted_index]
+
+            return shifted_char if char.islower() else shifted_char.upper()
         else:
             return char
+
+    def shift_index(self, alph_index, offset):
+        """
+        Returns alphabet index of character shifted in cycle by offset.
+        :param alph_index:
+        :param offset:
+        :return:
+        """
+        return (alph_index + offset) % len(self.alphabet)
 
     def get_shifts(self, key):
         """
@@ -91,8 +108,9 @@ class VigenereAlgorithm(CryptoModule):
         :param key:
         :return:
         """
-        if not all([char in self.alphabet for char in key]):
-            raise ValueError('Key can only contain characters from alphabet')
+        if not all([char in self.alphabet for char in key.lower()]):
+            raise ValueError('Key can only contain characters from selected'
+                             ' alphabet')
         shifts = [self.alphabet.index(char) for char in key.lower()]
 
         return shifts

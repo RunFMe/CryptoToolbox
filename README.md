@@ -21,13 +21,13 @@ The implementation allows hacking cesar algorithm using statistical methods.
 #### Encrypt
 ```
 echo "ENCODE ME" > original.txt
-python cesar encrypt -i original.txt -o encoded.txt --shift 13
+python main.py cesar encrypt -i original.txt -o encoded.txt --shift 13
 cat encoded.txt
 ```
 
 #### Decrypt
 ```
-python cesar decrypt -i encoded.txt --shift 13
+python main.py cesar decrypt -i encoded.txt --shift 13
 ```
 
 ### Hack

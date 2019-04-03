@@ -28,6 +28,8 @@ class CesarAlgorithm(VigenereAlgorithm):
                                  'calculate model character distribution for '
                                  'statistical analysis, required for hack '
                                  'action')
+        parser.add_argument('--lang', '-l', choices=['en', 'ru'], default='en',
+                            help='Which language letters to encode')
 
     def encrypt_action(self, input_text, arguments):
         return self.encrypt(input_text, [arguments.shift])
@@ -64,12 +66,12 @@ class CesarAlgorithm(VigenereAlgorithm):
         """
         divergence = 0
 
-        for char in self.alphabet:
-            if input_distr[char] == 0.0 or train_distr[char] == 0.0:
+        for index in range(len(self.alphabet)):
+            if input_distr[index] == 0.0 or train_distr[index] == 0.0:
                 continue
 
-            divergence += train_distr[char] * log(
-                train_distr[char] / input_distr[char])
+            divergence += train_distr[index] * log(
+                train_distr[index] / input_distr[index])
 
         return divergence
 
@@ -81,11 +83,10 @@ class CesarAlgorithm(VigenereAlgorithm):
         :return char_distribution:
         """
         counter = Counter(text.lower())
-        distribution = {}
 
         # put number of alphabetic characters in dict
-        for char in self.alphabet:
-            distribution[char] = counter.get(char, 0.0)
+        distribution = {index: counter.get(char, 0.0) for index, char
+                        in enumerate(self.alphabet)}
 
         # normalise values in dict to get real distribution
         # num_alpha is set to 1 in case there was no alphabetical characters in
@@ -110,8 +111,8 @@ class CesarAlgorithm(VigenereAlgorithm):
         best_shift = None
         min_divergence = None
         for shift in range(len(self.alphabet)):
-            shifted_input_distr = {self.shift_char(char, shift): prob for
-                                   char, prob in input_distr.items()}
+            shifted_input_distr = {self.shift_index(index, shift): prob for
+                                   index, prob in input_distr.items()}
             divergence = self.calc_divergence(train_distr, shifted_input_distr)
 
             if min_divergence is None or divergence < min_divergence:
