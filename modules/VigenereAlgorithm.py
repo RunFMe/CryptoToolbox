@@ -1,5 +1,6 @@
-from CryptoModule import CryptoModule
+import string
 
+from CryptoModule import CryptoModule
 from utils import read_input, write_output
 
 
@@ -7,6 +8,10 @@ class VigenereAlgorithm(CryptoModule):
     """
     Implementation of Vigenere Crypto Algorithm. It can encrypt, decrypt texts.
     """
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.alphabet = string.ascii_lowercase
 
     def _register_arguments(self, parser):
         parser.add_argument('action', choices=['encrypt', 'decrypt'],
@@ -67,24 +72,27 @@ class VigenereAlgorithm(CryptoModule):
 
     def shift_char(self, char, offset):
         """
-        Shifts alphabetical character by offset in cycle preserving whether
+        Shifts character from alphabet by offset in cycle preserving whether
         is is capital or not and does nothing on non-alphabetical ones.
         :param char:
         :param offset:
         :return shifted_char:
         """
-        if char.isalpha():
-            char_num = ord(char.lower()) - ord('a')
-            first_char_ord = ord(char) - char_num
-            new_char_num = first_char_ord + (char_num + offset) % 26
-            return chr(new_char_num)
+        if char in self.alphabet:
+            char_num = self.alphabet.index(char)
+            shifted_char_num = (char_num + offset) % len(self.alphabet)
+            return self.alphabet[shifted_char_num]
         else:
             return char
 
     def get_shifts(self, key):
-        if not all([char.isalpha() for char in key]):
-            raise ValueError('Key can only contain alphabetical characters')
-        shifts = [ord(key_char) - ord('a') for key_char in
-                  key.lower()]
+        """
+        Transforms string into array of character positions in english alphabet
+        :param key:
+        :return:
+        """
+        if not all([char in self.alphabet for char in key]):
+            raise ValueError('Key can only contain characters from alphabet')
+        shifts = [self.alphabet.index(char) for char in key.lower()]
 
         return shifts

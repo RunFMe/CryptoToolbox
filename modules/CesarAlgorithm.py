@@ -64,7 +64,7 @@ class CesarAlgorithm(VigenereAlgorithm):
         """
         divergence = 0
 
-        for char in self.lower_alphas():
+        for char in self.alphabet:
             if input_distr[char] == 0.0 or train_distr[char] == 0.0:
                 continue
 
@@ -84,7 +84,7 @@ class CesarAlgorithm(VigenereAlgorithm):
         distribution = {}
 
         # put number of alphabetic characters in dict
-        for char in self.lower_alphas():
+        for char in self.alphabet:
             distribution[char] = counter.get(char, 0.0)
 
         # normalise values in dict to get real distribution
@@ -109,7 +109,7 @@ class CesarAlgorithm(VigenereAlgorithm):
 
         best_shift = None
         min_divergence = None
-        for shift in range(0, 26):
+        for shift in range(len(self.alphabet)):
             shifted_input_distr = {self.shift_char(char, shift): prob for
                                    char, prob in input_distr.items()}
             divergence = self.calc_divergence(train_distr, shifted_input_distr)
@@ -119,10 +119,3 @@ class CesarAlgorithm(VigenereAlgorithm):
                 min_divergence = divergence
 
         return best_shift
-
-    def lower_alphas(self):
-        """
-        Returns list of all lowercase characters
-        :return lowercase_list:
-        """
-        return [chr(i) for i in range(ord('a'), ord('a') + 26)]
