@@ -110,7 +110,8 @@ def read_input(input_name, use_bytes=False):
     else:
         input_f = open(input_name, 'rb' if use_bytes else 'r')
     input_bytes = input_f.read()
-    input_f.close()
+    if input_name is not None:
+        input_f.close()
 
     return input_bytes
 
@@ -127,7 +128,9 @@ def write_output(output, output_name, use_bytes=False):
     else:
         output_f = open(output_name, 'wb+' if use_bytes else 'w+')
     output_f.write(output)
-    output_f.close()
+
+    if output_name is not None:
+        output_f.close()
 
 
 en_letters = string.ascii_lowercase
