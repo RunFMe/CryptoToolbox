@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from utils import ConfigParser
+
 
 class CryptoModule(ABC):
     """
@@ -8,8 +10,9 @@ class CryptoModule(ABC):
     _register_arguments and parse_arguments.
     """
 
-    def __init__(self, name):
+    def __init__(self, name, config_file):
         self.__name__ = name
+        self.config = ConfigParser(config_file)
         self.supports_visual = False
 
     def register_subparser(self, subparsers):
@@ -19,18 +22,13 @@ class CryptoModule(ABC):
         :param subparsers:
         :return:
         """
-        cesar_parser = subparsers.add_parser(self.__name__)
-        self._register_arguments(cesar_parser)
-        cesar_parser.set_defaults(parse_func=self.parse_arguments)
+        subparser = subparsers.add_parser(self.__name__)
+        for argument_options in self.config.arguments:
+            names = argument_options['names']
+            del argument_options['names']
 
-    @abstractmethod
-    def _register_arguments(self, parser):
-        """
-        Adds arguments required by the algorithm to a parser
-        :param parser:
-        :return:
-        """
-        pass
+            subparser.add_argument(*names, **argument_options)
+        subparser.set_defaults(parse_func=self.parse_arguments)
 
     @abstractmethod
     def parse_arguments(self, arguments):

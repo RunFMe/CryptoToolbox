@@ -8,23 +8,9 @@ class VigenereAlgorithm(CryptoModule):
     """
     Implementation of Vigenere Crypto Algorithm. It can encrypt, decrypt texts.
     """
-    def __init__(self, name):
-        super().__init__(name)
+    def __init__(self, name, config_file):
+        super().__init__(name, config_file)
         self.alphabet = None
-
-    def _register_arguments(self, parser):
-        parser.add_argument('action', choices=['encrypt', 'decrypt'],
-                            help='specifies which action to take')
-        parser.add_argument('--input', '-i',
-                            help='path to input file, stdin used if not '
-                                 'provided')
-        parser.add_argument('--output', '-o',
-                            help='path yo output file, stdout is used if not '
-                                 'provided')
-        parser.add_argument('--key', '-k', required=True,
-                            help='String used as a key for encryption')
-        parser.add_argument('--lang', '-l', choices=['en', 'ru'], default='en',
-                            help='Which language letters to encode')
 
     def parse_arguments(self, arguments):
         if arguments.lang == 'en':

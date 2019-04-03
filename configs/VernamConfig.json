@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    {
+      "names": [
+        "--key",
+        "-k"
+      ],
+      "required": true,
+      "help": "path to key file, required to encrypt/decrypt"
+    }
+  ],
+  "parents": [
+    "OptionalInputConfig.json"
+  ]
+}

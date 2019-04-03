@@ -1,0 +1,16 @@
+{
+  "arguments": [
+    {
+      "names": [
+        "--lang",
+        "-l"
+      ],
+      "choices": [
+        "en",
+        "ru"
+      ],
+      "default": "en",
+      "help": "Which language letters to encode"
+    }
+  ]
+}

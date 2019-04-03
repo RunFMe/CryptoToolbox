@@ -11,26 +11,6 @@ class CesarAlgorithm(VigenereAlgorithm):
     text.
     """
 
-    def _register_arguments(self, parser):
-        parser.add_argument('action', choices=['encrypt', 'decrypt', 'hack'],
-                            help='specifies which action to take')
-        parser.add_argument('--input', '-i',
-                            help='path to input file, stdin used if not '
-                                 'provided')
-        parser.add_argument('--output', '-o',
-                            help='path to output file, stdout is used if not '
-                                 'provided')
-        parser.add_argument('--shift', '-s', type=int,
-                            help='shift used for encryption, required for '
-                                 'actions encrypt and decrypt')
-        parser.add_argument('--train', '-t',
-                            help='path to a file which will be used to '
-                                 'calculate model character distribution for '
-                                 'statistical analysis, required for hack '
-                                 'action')
-        parser.add_argument('--lang', '-l', choices=['en', 'ru'], default='en',
-                            help='Which language letters to encode')
-
     def encrypt_action(self, input_text, arguments):
         return self.encrypt(input_text, [arguments.shift])
 

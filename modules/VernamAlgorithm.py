@@ -9,17 +9,6 @@ class VernamAlgorithm(CryptoModule):
     same key.
     """
 
-    def _register_arguments(self, parser):
-        parser.add_argument('--input', '-i',
-                            help='path to input file, stdin used if not '
-                                 'provided')
-        parser.add_argument('--output', '-o',
-                            help='path to output file, stdout is used if not '
-                                 'provided')
-        parser.add_argument('--key', '-k', required=True,
-                            help='path to key file, required to encrypt/'
-                                 'decrypt')
-
     def parse_arguments(self, arguments):
         input_bytes = read_input(arguments.input, use_bytes=True)
         key_bytes= read_input(arguments.key, use_bytes=True)
