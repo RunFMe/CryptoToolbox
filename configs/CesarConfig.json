@@ -17,7 +17,8 @@
         "-s"
       ],
       "type": "int",
-      "help": "shift used for encryption, required for actions encrypt and decrypt"
+      "help": "shift used for encryption, required for actions encrypt and decrypt",
+      "required": true
     },
     {
       "names": [
