@@ -9,9 +9,6 @@ class Alphabet(tuple):
     Tuple-like object with improved index function.
     """
 
-    def __new__(cls, letters):
-        return super().__new__(cls, letters)
-
     def __init__(self, letters):
         super().__init__()
         self.indexes = {char: i for i, char in enumerate(letters)}
