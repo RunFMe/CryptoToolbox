@@ -1,0 +1,35 @@
+{
+  "arguments": [
+    {
+      "names": [
+        "action"
+      ],
+      "choices": [
+        "encrypt",
+        "decrypt",
+        "hack"
+      ],
+      "help": "specifies which action to take"
+    },
+    {
+      "names": [
+        "--shift",
+        "-s"
+      ],
+      "type": "int",
+      "help": "shift used for encryption, required for actions encrypt and decrypt",
+      "required": true
+    },
+    {
+      "names": [
+        "--train",
+        "-t"
+      ],
+      "help": "path to a file which will be used to calculate model character distribution for statistical analysis, required for hack action"
+    }
+  ],
+  "parents": [
+    "OptionalInputConfig.json",
+    "LanguageSpecificationConfig.json"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "arguments": [
+    {
+      "names": [
+        "action"
+      ],
+      "choices": [
+        "encrypt",
+        "decrypt"
+      ],
+      "help": "specifies which action to take"
+    },
+    {
+      "names": [
+        "--key",
+        "-k"
+      ],
+      "required": true,
+      "help": "String used as a key for encryption"
+    }
+  ],
+  "parents": [
+    "OptionalInputConfig.json",
+    "LanguageSpecificationConfig.json"
+  ]
+}
